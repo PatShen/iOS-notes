@@ -9,11 +9,7 @@
 当 UICollectionView 调用方法：
 
 ```Swift
-
-let indexPath: IndexPath ...
-
 collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
-
 ```
 
 发现不起作用。经过检查：
