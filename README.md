@@ -32,3 +32,6 @@ collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: 
 collectionView.isPagingEnabled = true
 
 ```
+
+> 可以通过方法交换，无感知修复这个问题。
+
