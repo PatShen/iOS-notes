@@ -35,3 +35,36 @@ collectionView.isPagingEnabled = true
 
 > 可以通过方法交换，无感知修复这个问题。
 
+## OC 和 Swift 中判断是否引入了 framework/module 的方法
+
+老是记不住，记下来
+
+OC：`#if __has_include(xxx)`
+
+```objc
+#if __has_include(<SomeModule/SomeModule.h>)
+#import <SomeModule/SomeModule.h>
+#define __HAS_SOME_MODULE_FRAMEWORK__
+#endif
+```
+
+```objc
+/// 使用 api 时
+- (void)doSomething {
+    #ifdef __HAS_SOME_MODULE_FRAMEWORK__
+    // with  SomeModule framework
+    #else
+    // without  SomeModule framework
+    #endif
+}
+```
+
+Swift：`#if canImport(xxx)`
+
+```swift
+#if canImport(SomeModule)
+@import SomeModule;
+#endif
+```
+
+[参考链接](https://stackoverflow.com/questions/52605302/swifts-canimport-analogue-in-objective-c)
