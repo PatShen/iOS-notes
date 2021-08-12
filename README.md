@@ -34,6 +34,7 @@ collectionView.isPagingEnabled = true
 ```
 
 > 可以通过方法交换，无感知修复这个问题。
+> 
 > 根据最新的 iOS15 Beta5 测试的情况来看，系统已经修复了这个问题。
 
 ## OC 和 Swift 中判断是否引入了 framework/module 的方法
