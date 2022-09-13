@@ -60,10 +60,67 @@ show(photos)
 
 以上方法可以混用
 
-# 任务和任务组
+# 任务和任务组（Task TaskGroup)
 
-> TBC...
+* 有点类似 Operation，Task 可以直接利用异步函数的语法，而 Operation 需要依靠子类或者闭包
+* 任务按层次结构排列。任务组中的每个任务都有相同的父任务，每个任务都可以有子任务。由于任务和任务组之间的明确关系，这种方法被称为*结构化并发*。
+* 非结构化并发：没有父任务
+* 任务取消
+  * 检查取消状态：Task.checkCancellation() 
+  * 任务已经被取消 Task.checkCancellationError 
+  * 检查 Task.isCancelled，用自己的代码处理取消
+  * 手动取消：Task.cancel()
+
+# Actor
+
+* 和 Class 一样是引用类型
+* 一次只允许一个任务访问其可变状态
+* 可用于在任务之间共享一些信息
+
+例如保证读取某个 Actor 对象的属性时是线程安全的
+
+```Swift
+actor TemperatureLogger {
+    let label: String
+    var measurements: [Int]
+    private(set) var max: Int
+
+    init(label: String, measurement: Int) {
+        self.label = label
+        self.measurements = [measurement]
+        self.max = measurement
+    }
+}
+```
+内部才可修改 max 的值
+
+``` Swift
+let logger = TemperatureLogger(label: "Outdoors", measurement: 25)
+print(await logger.max)
+// Prints "25"
+```
+外部访问时，需要用 `await` 标记潜在的暂停点。
+
+而在内部，可以直接修改，不需要使用 await
+
+```Swift
+extension TemperatureLogger {
+    func update(with measurement: Int) {
+        measurements.append(measurement)
+        if measurement > max {
+            max = measurement
+        }
+    }
+}
+```
+
+> 提供封装良好的数据隔离，确保并发代码的安全。
+
+# 可发送类型
+
+可以从一个并发域共享到另一个并发域的类型。
 
 # 参考
 
 * [Concurrency-The Swift Programming Language](https://docs.swift.org/swift-book/LanguageGuide/Concurrency.html)
+* [Swift 并发初步](https://onevcat.com/2021/07/swift-concurrency/)
