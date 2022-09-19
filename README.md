@@ -43,6 +43,6 @@ class MyClass {
 20220223|新增[SSH连接Git超时](https://github.com/PatShen/iOS-notes/blob/main/SSH连接Git超时.md)
 20210905|新增[Swift自定义命名空间](https://github.com/PatShen/iOS-notes/blob/main/Swift自定义命名空间.md)
 20210818|新增[UIView](https://github.com/PatShen/iOS-notes/blob/main/UIView.md)
-20210818|新增[App启动速度优化（占位）](https://github.com/PatShen/iOS-notes/blob/main/App启动速度优化)
-20210818|新增[Bug和修复方法](https://github.com/PatShen/iOS-notes/blob/main/Bug和修复方法)
+20210818|新增[App启动速度优化（占位）](https://github.com/PatShen/iOS-notes/blob/main/App启动速度优化.md)
+20210818|新增[Bug和修复方法](https://github.com/PatShen/iOS-notes/blob/main/Bug和修复方法.md)
 20210818|新增[备忘录](https://github.com/PatShen/iOS-notes/blob/main/备忘录.md)
