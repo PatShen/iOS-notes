@@ -1,5 +1,26 @@
 # iOS-notes
 
+## Tiny Tips
+
+### 在闭包中强引用 self 的两种方法
+
+```Swift
+// Proposal 1
+class MyClass {
+  prepareVideo {
+    self.movePlayhead(to: self.video.lastPlayheadPosition)
+    self.startPlaybackIfNeeded()
+  }
+}
+
+// Proposal 2
+class MyClass {
+  prepareVideo { [self] in
+    movePlayhead(to: video.lastPlayheadPosition)
+    startPlaybackIfNeeded()
+  }
+}
+```
 
 ## UICollectionView drag and drop
 
