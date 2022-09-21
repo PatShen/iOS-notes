@@ -120,6 +120,25 @@ extension TemperatureLogger {
 
 可以从一个并发域共享到另一个并发域的类型。
 
+> 这个类型看起来是结合 Actor 模型一起用的，目前暂时没怎么看懂，后续边用边学。
+
+官方实例：
+```Swift
+struct TemperatureReading: Sendable {
+    var measurement: Int
+}
+
+extension TemperatureLogger {
+    func addReading(from reading: TemperatureReading) {
+        measurements.append(reading.measurement)
+    }
+}
+
+let logger = TemperatureLogger(label: "Tea kettle", measurement: 85)
+let reading = TemperatureReading(measurement: 45)
+await logger.addReading(from: reading)
+```
+
 # 参考
 
 * [Concurrency-The Swift Programming Language](https://docs.swift.org/swift-book/LanguageGuide/Concurrency.html)
