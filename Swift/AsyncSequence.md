@@ -89,7 +89,7 @@ for await quake in significantQuakes {
 
 * Use async/await with URLSession （使用带有 URLSession 的 async/await)
 * Meet async/await in Swift (认识Swift中的 async/await)
-* Explore structured concurrency in Swift（探索 Swift 中的并发）
+* Explore structured concurrency in Swift（探索 Swift 中的结构化并发）
 
 
 # 参考链接
