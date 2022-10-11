@@ -75,7 +75,7 @@ let significantQuakes = quakes.filter { quake in
 }
 
 for await quake in significantQuakes {
-    ...
+    // ...
 }
 ```
 
