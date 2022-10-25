@@ -198,6 +198,35 @@ func fetchThumbnail(for id: String) async throws -> UIImage {
 * Other work can happen during a suspension
 * Once an awaited async call completes, execution resumes after the `await`
 
+## adopting async/await
+
+### Testing async code
+
+* Testing using XCTestExpectation
+
+```Swift
+class MockViewModelSpec: XCTestCase {
+    func testFetchThumbnails() throws {
+        let expectation = XCTestExpectation(description: "mock thumbnails completion")
+        self.mockViewModel.fetchThumbnail(for: mockID) { result, error in
+            XCTAssertNil(error)
+            expectation.fulfill()
+        }
+        wait(for: [expectation], timeout: 5.0)
+    }
+}
+```
+
+* Testing using async/await
+
+```Swift
+class MockViewModelSpec: XCTestCase {
+    func testFetchThumbnails() async throws {
+        XCTAssertNoThrow(try await self.mockViewModel.fetchThumbnail(for: mockID))
+    }
+}
+```
+
 # 参考
 
 * [Concurrency-The Swift Programming Language](https://docs.swift.org/swift-book/LanguageGuide/Concurrency.html)
