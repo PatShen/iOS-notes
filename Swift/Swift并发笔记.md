@@ -139,6 +139,65 @@ let reading = TemperatureReading(measurement: 45)
 await logger.addReading(from: reading)
 ```
 
+## async & await
+
+### 为什么要使用 async & await
+
+背景
+
+* 以往的业务代码，如果遇到耗时操作，例如加载网络图片，我们一般会采用闭包将数据回调回去。
+* 在代码实现的过程中，我们需要针对每一步进行容错处理，每一处容错都是一个逻辑分支，都需要调用回调使之能回到主线程继续后续的逻辑。
+* 这会带来两个问题：1.可能会有遗漏，某些情况下回不到主线程，程序看起来像是卡死了；2.调用回调的地方很多，形成所谓“回调地狱”；
+* 即便我们在结果里添加了 Result type，虽然会更加安全，但代码看起来让人感觉很多、很臃肿；
+
+```Swift
+func fetchThumbnail(for id: String, completion: @escaping (Result<UIImage, Error>) -> Void) {
+    let request = thumbnailURLRequest(for: id)
+    let task = URLSession.shared.dataTask(with: request) { data, response, error in
+        if let error = error {
+            completion(.failure(error))
+        } else if (response as? HTTPURLResponse)?.statusCode != 200 {
+            completion(.failure(FetchError.badID))
+        } else {
+            guard let image = UIImage(data: data!) else {
+                completion(.failure(FetchError.badImage))
+                return
+            }
+            image.prepareThumbnail(of: CGSize(width: 40, height: 40)) { thumbnail in
+                guard let thumbnail = thumbnail else {
+                    completion(.failure(FetchError.badImage))
+                    return
+                }
+                completion(.success(thumbnail))
+            }
+        }
+    }
+    task.resume()
+}
+```
+
+async & await 能否改善这个现象？当然是可以的。
+
+* async & await 将回调改为了返回值，这样以来所有情况下都必须返回，这个错误会在编译阶段就被发现，避免了遗漏，即便是 `guard let` 句式也是如此；
+* async & await 的代码都是线性的，与闭包不同，多个句式前后关联的情况下，async & await 不会出现“阶梯式”代码；
+
+```Swift
+func fetchThumbnail(for id: String) async throws -> UIImage {
+    let request = thumbnailURLRequest(for: id)  
+    let (data, response) = try await URLSession.shared.data(for: request)
+    guard (response as? HTTPURLResponse)?.statusCode == 200 else { throw FetchError.badID }
+    let maybeImage = UIImage(data: data)
+    guard let thumbnail = await maybeImage?.thumbnail else { throw FetchError.badImage }
+    return thumbnail
+}
+```
+## async/await facts
+
+* `async` enables a function to suspend
+* `await` makes when an async function may suspend execution
+* Other work can happen during a suspension
+* Once an awaited async call completes, execution resumes after the `await`
+
 # 参考
 
 * [Concurrency-The Swift Programming Language](https://docs.swift.org/swift-book/LanguageGuide/Concurrency.html)
