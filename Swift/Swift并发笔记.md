@@ -231,3 +231,4 @@ class MockViewModelSpec: XCTestCase {
 
 * [Concurrency-The Swift Programming Language](https://docs.swift.org/swift-book/LanguageGuide/Concurrency.html)
 * [Swift 并发初步](https://onevcat.com/2021/07/swift-concurrency/)
+* [认识 Swift 中的 async/await](https://developer.apple.com/wwdc21/10132)
