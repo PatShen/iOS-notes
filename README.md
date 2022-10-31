@@ -27,15 +27,13 @@ class MyClass {
 * SwiftUI View 内部的属性只能通过在 View 内部修改的方式更新 UI
 
 ```Swift
-import SwiftUI
-
 struct MyView: View {
   @State var text: String = ""
   
   var body: some View {
     Text(text)
       .onTapGesture {
-      // 可以更新
+        // 可以更新
         self.text = "Tapping..."
       }
   }
@@ -46,13 +44,42 @@ struct XXApp: App {
     WindowGroup <MyView> {
       let view = MyView()
       DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-      // 无法更新
+        // 无法更新
         view.text = "Update text"
       }
       return view
     }
   }
 }
+
+```
+
+如果需要实现在外部修改 SwiftUI View 的元素，需要创建一个 ObservedObject，将其某个属性设置为 Published，再修改这个属性
+
+```Swift
+struct MyView: View {
+  @ObservedObject var viewModel: MyViewModel
+  var body: some View {
+    Text(viewModel.text)
+  }
+}
+
+class MyViewModel: ObservableObject {
+  @Published var text: String = ""
+}
+
+struct XXApp: App {
+  var viewModel: MyViewModel = .init()
+  var body: some Scene {
+    WindowGroup <MyView> {
+      let view = MyView(viewModel: viewModel)
+      DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+        // 可以更新
+        viewModel.text = "Update text"
+      }
+      return view
+    }
+  }
 
 ```
 
