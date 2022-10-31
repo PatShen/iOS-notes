@@ -22,6 +22,40 @@ class MyClass {
 }
 ```
 
+### SwiftUI 元素刷新
+
+* SwiftUI View 内部的属性只能通过在 View 内部修改的方式更新 UI
+
+```Swift
+import SwiftUI
+
+struct MyView: View {
+  @State var text: String = ""
+  
+  var body: some View {
+    Text(text)
+      .onTapGesture {
+      // 可以更新
+        self.text = "Tapping..."
+      }
+  }
+}
+
+struct XXApp: App {
+  var body: some Scene {
+    WindowGroup <MyView> {
+      let view = MyView()
+      DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+      // 无法更新
+        view.text = "Update text"
+      }
+      return view
+    }
+  }
+}
+
+```
+
 ## UICollectionView drag and drop
 
 * 主要流程：https://www.jianshu.com/p/db55bd5f5aeb
