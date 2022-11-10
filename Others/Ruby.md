@@ -23,3 +23,4 @@ $ rvm alias create default ruby-2.7.2
 
 https://stackoverflow.com/a/52273420
 https://www.jianshu.com/p/a97eca5254b8
+https://rvm.io/rubies/default
