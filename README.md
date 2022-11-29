@@ -2,6 +2,10 @@
 
 ## Tiny Tips
 
+### How to use @available to deprecate old APIs
+
+https://www.hackingwithswift.com/example-code/language/how-to-use-available-to-deprecate-old-apis
+
 ### 在闭包中强引用 self 的两种方法
 
 ```Swift
