@@ -38,6 +38,7 @@ Xcode cloud 已深度集成到了 Xcode 中，在 `顶部菜单->Product->Xcode 
 * Restrict editing: 限制对工作流的编辑
   * 图形化交互
 * Multiple start conditions
+  * 减少工作流的数量，在不同条件下开启相同的工作流
 
 ## 设置条件
 
