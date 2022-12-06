@@ -10,6 +10,35 @@ Pull request workflow
 
 Xcode cloud 已深度集成到了 Xcode 中，在 `顶部菜单->Product->Xcode Cloud` 中可以进行创建和管理。
 
+* Webhook: 在 App Store Connect 中连接 Webhook
+* API: [xcode_cloud_workflows_and_builds](https://developer.apple.com/documentation/appstoreconnectapi/xcode_cloud_workflows_and_builds)
+
+### 依赖
+
+* 内置SPM
+* 可以和第三方管理工具一起使用，如 Cocoapods 和 Carthage
+  * 需要额外设置一些脚本
+  * 文档：[making-dependencies-available-to-xcode-cloud](https://developer.apple.com/documentation/xcode/making-dependencies-available-to-xcode-cloud)
+
+### 实例
+
+* SwiftLint
+  * 使用自定义脚本集成
+  ```shell
+  #!/bin/zsh
+  
+  # ci_post_clone.sh
+  
+  # Use Homebrew to install the SwiftLint tool
+  brew install swiftlint
+  
+  # Run SwiftLint
+  swiftlint $CI_WORKSPACE
+  ```
+* Restrict editing: 限制对工作流的编辑
+  * 图形化交互
+* Multiple start conditions
+
 ## 设置条件
 
 * 类型
