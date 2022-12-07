@@ -115,3 +115,86 @@ Xcode cloud 已深度集成到了 Xcode 中，在 `顶部菜单->Product->Xcode 
 * Runs on many simulators, multiple platforms
 * Notifies the QA team on failure
 * No deplovment
+
+# 高级功能
+
+## 环境变量
+
+* 切换 API 域名
+* 支持加密
+
+```
+支持的环境变量
+
+Environment Variables/ CI / CI_AD_HOC_SIGNED_APP_PATH /
+CI_APP_STORE_SIGNED_APP_PATH / CI_ARCHIVE_PATH / CI_BRANCH /
+CI_BUILD_ID / CI_BUILD_NUMBER / CI_BUNDLE_ID / CI_COMMIT / CI_DERIVED_DATA_PATH / CI_DEVELOPER_ID_SIGNED_APP_PATH/ CI_DEVELOPMENT_SIGNED_APP_PATH / CI_GIT_REF / CI_PRODUCT / CI_PRODUCT_ID / CI_PRODUCT_PLATFORM / CI_PROJECT_FILE_PATH /
+CI_PULL_REQUEST_HTML_URL / CI_PULL_REQUEST_NUMBER /
+CI_PULL_REQUEST_SOURCE_BRANCH / CI_PULL_REQUEST_SOURCE_COMMIT /
+CI_PULL_REQUEST_SOURCE_REPO / CI_PULL_REQUEST_TARGET_BRANCH / CI_PULL_REQUEST_TARGET_COMMIT / CI_PULL_REQUEST_TARGET_REPO /
+CI_RESULT_BUNDLE_PATH/ CI_TAG/ CI_TEAM_ID/ CI_TEST_DESTINATION_DEVICE_TYPE / CI_TEST_DESTINATION_RUNTIME/ CI_TEST_DESTINATION_UDID / CI_TEST_PLAN / CI_TEST_PRODUCTS_PATH / CI_START_CONDITION / CI_WORKFLOW / CI_WORKSPACE / CI_XCODE_PROJECT / CI_XCODE_SCHEME / CI_XCODEBUILD_ACTION / CI_XCODEBUILD_EXIT_CODE
+```
+
+## 自定义脚本
+
+* Post-clone
+* Pre-Xcodebuild
+* Post-Xcodebuild
+
+将自定义脚本，写入 `ci_post_clone.sh`，`ci_pre_xcodebuild.sh`或`ci_post_xcodebuid.sh` 并放到 `ci_scripts` 文件夹中即可。
+
+为 Beta 版本替换应用图标
+
+```shell
+#!/bin/sh
+
+#  ci_pre_xcodebuild.sh
+#  Fruta
+#
+#  Made in Vancouver, Canada
+#  
+# 判断是来自于 PR， 且用于分发到 TestFlight 
+if [[ -n $CI_PULL_REQUEST_NUMBER && $CI_XCODEBUILD_ACTION = 'archive' ]];
+then
+    echo "Setting Fruta Beta App Icon"
+    APP_ICON_PATH=$CI_WORKSPACE/Shared/Assets.xcassets/AppIcon.appiconset
+    
+    # Remove existing App Icon
+    rm -rf $APP_ICON_PATH
+    
+    # Replace with Fruta Beta App Icon
+    mv "$CI_WORKSPACE/ci_scripts/AppIcon-Beta.appiconset" $APP_ICON_PATH
+fi
+```
+
+## 使用额外存储库（私有sdk）
+
+* 使用 SPM（Swift Packages Manager）
+* AppStoreConnect 网页授权访问新的 git 仓库
+* 支持其他所有的 git 仓库
+* 支持其他所有的管理工具
+
+## Webhook
+
+* 需要提供一个可以接收 HTTP 请求的服务
+* 可在 AWS Lambda 利用 Swift 实现
+
+```Swift
+// Handling the webhook from an AWS Lambda
+Lambda.run { (context, request: APIGateway. V2.Request, callback: @escaping (Result<APIGateway. V2.Response, Error>) -> Void) in {
+  // ...
+  let webhook = jsonDecoder. decode (Webhook.self, Data(request .body.utf8))
+
+  if webhook.workflow.content .name == "Release Workflow" &&
+     webhook.buildDetails.build.state == .succeeded {
+     twitterClient.post (content: """
+     🚀 Build #\ (webhook.buildRun.number) of \ (webhook.app.name) is available for testing!
+     Get it here: <Testflight public link>
+      """
+     )
+  }
+  return callback(. success (APIGateway. V2. Response (statusCode: .ok) ))
+}
+
+// Use Swift on AWS Lambda with Xcode (WWDC2020)
+```
