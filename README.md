@@ -93,6 +93,9 @@ struct XXApp: App {
 * 完善放置流程：https://medium.com/hackernoon/how-to-drag-drop-uicollectionview-cells-by-utilizing-dropdelegate-and-dragdelegate-6e3512327202
 * UIDragSession 判断拖拽位置：https://www.jianshu.com/p/2cd8e4a6aa57 
 
+## @discardableResult
+
+[@discardableResult in Swift explained: Ignoring return values](https://www.avanderlee.com/swift/discardableresult/)
 
 # 更新记录
 
