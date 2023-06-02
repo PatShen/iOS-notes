@@ -12,3 +12,5 @@ Command timed out after 3 seconds on try 1 of 4, trying again with a 6 second ti
 
 * [https://github.com/fastlane/fastlane/issues/20919](https://github.com/fastlane/fastlane/issues/20919)
 * [https://github.com/fastlane/fastlane/issues/7898](https://github.com/fastlane/fastlane/issues/7898)
+
+Can resolve the problem of timeout when we try to run `gym` and `scan`.
