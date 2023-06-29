@@ -24,3 +24,14 @@ $ rvm alias create default ruby-2.7.2
 https://stackoverflow.com/a/52273420
 https://www.jianshu.com/p/a97eca5254b8
 https://rvm.io/rubies/default
+
+# rbenv not changing ruby version
+
+```
+$ export PATH="$HOME/.rbenv/bin:$PATH"
+$ eval "$(rbenv init -)"
+$ rbenv global 2.7.7
+
+$ ruby -v
+```
+https://stackoverflow.com/questions/10940736/rbenv-not-changing-ruby-version
