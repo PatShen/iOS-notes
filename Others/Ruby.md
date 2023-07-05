@@ -35,3 +35,29 @@ $ rbenv global 2.7.7
 $ ruby -v
 ```
 https://stackoverflow.com/questions/10940736/rbenv-not-changing-ruby-version
+
+# cannot load such file -- openssl (RVM)
+
+* `bundle install`
+```
+Traceback (most recent call last):
+   2: from /Users/username/.rvm/rubies/ruby-2.7.7/bin/bundle:23:in `<main>'
+   1: from /Users/username/.rvm/rubies/ruby-2.7.7/lib/ruby/2.7.0/rubygems.rb:296:in `activate_bin_path'
+/Users/username/.rvm/rubies/ruby-2.7.7/lib/ruby/2.7.0/rubygems.rb:277:in `find_spec_for_exe': Could not find 'bundler' (2.3.22) required by your /Users/username/Documents/xxxx/Gemfile.lock. (Gem::GemNotFoundException)
+To update to the latest version installed on your system, run `bundle update --bundler`.
+To install the missing version, run `gem install bundler:2.3.22`
+```
+* `gem install bundler:2.3.22`
+```
+ERROR:  Loading command: install (LoadError)
+	cannot load such file -- openssl
+ERROR:  While executing gem ... (NoMethodError)
+    undefined method `invoke_with_build_args' for nil:NilClass
+```
+* Solution
+```
+rvm pkg install openssl
+rvm reinstall all --force
+```
+
+https://stackoverflow.com/questions/15129355/ruby-2-0-rails-gem-install-error-cannot-load-such-file-openssl
