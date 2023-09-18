@@ -7,6 +7,16 @@ $ rvm alias create default ruby-2.7.2
 % rvm --default use 2.1.1
 ```
 
+## 设置路径
+
+```
+# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
+export PATH="$PATH:$HOME/.rvm/bin"
+```
+```
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
+```
+
 # Fastlane
 
 环境变量
