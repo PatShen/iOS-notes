@@ -17,6 +17,19 @@ export PATH="$PATH:$HOME/.rvm/bin"
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
 ```
 
+## Bundle install 报错
+
+```
+Could not load OpenSSL.
+You must recompile Ruby with OpenSSL support or change the sources in your Gemfile from 'https' to 'http'. Instructions for compiling with OpenSSL using RVM are available at rvm.io/packages/openssl.
+```
+
+rvm install 3.0.6 --with-openssl-dir=$(which openssl)
+
+## 
+
+https://stackoverflow.com/questions/77236339/after-updating-cocoapods-to-1-13-0-it-throws-error
+
 # Fastlane
 
 环境变量
