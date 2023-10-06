@@ -23,12 +23,10 @@ export PATH="$PATH:$HOME/.rvm/bin"
 Could not load OpenSSL.
 You must recompile Ruby with OpenSSL support or change the sources in your Gemfile from 'https' to 'http'. Instructions for compiling with OpenSSL using RVM are available at rvm.io/packages/openssl.
 ```
-
+解决方法：
+```
 rvm install 3.0.6 --with-openssl-dir=$(which openssl)
-
-## 
-
-https://stackoverflow.com/questions/77236339/after-updating-cocoapods-to-1-13-0-it-throws-error
+```
 
 # Fastlane
 
