@@ -28,6 +28,39 @@ You must recompile Ruby with OpenSSL support or change the sources in your Gemfi
 rvm install 3.0.6 --with-openssl-dir=$(which openssl)
 ```
 
+## 在Apple Silicon电脑中安装成功，但无法正常使用 cocoapods
+
+```
+# 安装 ruby 时的错误
+Error running '__rvm_make install',
+please read /Users/{username}/.rvm/log/1701256414_ruby-2.7.7/install.log
+There has been an error while running make install. Halting the installation.
+```
+虽然安装后能安装cocoapods等工具，但运行 pod install 时会提示错误
+
+```
+# pod install 时的错误
+/Users/{username}/.rvm/gems/ruby-2.7.7/gems/ffi-1.16.3/lib/ffi.rb:5:in `require': dlopen(/Users/{username}/.rvm/gems/ruby-2.7.7/gems/ffi-1.16.3/lib/ffi_c.bundle, 0x0009): tried: '/Users/{username}/.rvm/gems/ruby-2.7.7/gems/ffi-1.16.3/lib/ffi_c.bundle' (mach-o file, but is an incompatible architecture (have 'x86_64', need 'arm64')), '/System/Volumes/Preboot/Cryptexes/OS/Users/{username}/.rvm/gems/ruby-2.7.7/gems/ffi-1.16.3/lib/ffi_c.bundle' (no such file), '/Users/{username}/.rvm/gems/ruby-2.7.7/gems/ffi-1.16.3/lib/ffi_c.bundle' (mach-o file, but is an incompatible architecture (have 'x86_64', need 'arm64')) - /Users/{username}/.rvm/gems/ruby-2.7.7/gems/ffi-1.16.3/lib/ffi_c.bundle (LoadError)
+```
+
+解决办法：
+```
+rvm install 3.2.2 --with-openssl-dir=$(brew --prefix openssl@1.1) --force
+```
+参考链接：
+* https://github.com/rvm/rvm/issues/5285#issuecomment-1746915169
+* https://github.com/rvm/rvm/issues/5246#issuecomment-1671324137
+
+## ThreadError
+```
+/Users/{username}/.rvm/rubies/ruby-2.7.7/lib/ruby/site_ruby/2.7.0/rubygems/core_ext/kernel_gem.rb:67:in `synchronize': deadlock; recursive locking (ThreadError)
+```
+解决办法：
+```
+gem update --system
+```
+* https://stackoverflow.com/questions/67564557/kernel-gem-rb67in-synchronize-deadlock-recursive-locking-threaderror
+
 # Fastlane
 
 环境变量
