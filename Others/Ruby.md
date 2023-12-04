@@ -135,3 +135,21 @@ or
 brew install ca-certificats
 ```
 
+# RVM install ruby failed
+
+One possible necessary step:
+
+```
+brew unlink openssl@1.1 && brew link openssl@3
+```
+
+then do
+```
+PKG_CONFIG_PATH=/opt/homebrew/opt/openssl@1.1/lib/pkgconfig rvm install 2.7.7 --with-openssl-lib=/opt/homebrew/opt/openssl@1.1 --with-openssl-include=/opt/homebrew/opt/openssl@1.1
+```
+or 
+```
+PKG_CONFIG_PATH=/opt/homebrew/opt/openssl@3/lib/pkgconfig rvm install 3.1.4 --with-openssl-lib=/opt/homebrew/opt/openssl@3 --with-openssl-include=/opt/homebrew/opt/openssl@3
+```
+
+Solution: https://github.com/rvm/rvm/issues/5246
