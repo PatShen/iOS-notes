@@ -115,3 +115,23 @@ rvm reinstall all --force
 ```
 
 https://stackoverflow.com/questions/15129355/ruby-2-0-rails-gem-install-error-cannot-load-such-file-openssl
+
+# /opt/homebrew/etc/openssl@1.1/cert.pem: No such file or directory
+
+the error occured when we attempt to run the script:
+
+```
+$ rvm install 3.1.4 --with-openssl-dir=$(brew --prefix openssl@3) --force
+```
+After checking, it should link to `/opt/homebrew/etc/ca-certificats/cert.pem` and the direcory `/opt/homebrew/etc/ca-certificats` doesn't exist.
+
+one of the resolution is running:
+
+```
+brew install ca-certificats
+```
+or
+```
+brew install ca-certificats
+```
+
