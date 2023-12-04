@@ -152,4 +152,8 @@ or
 PKG_CONFIG_PATH=/opt/homebrew/opt/openssl@3/lib/pkgconfig rvm install 3.1.4 --with-openssl-lib=/opt/homebrew/opt/openssl@3 --with-openssl-include=/opt/homebrew/opt/openssl@3
 ```
 
-Solution: https://github.com/rvm/rvm/issues/5246
+Solution: [https://github.com/rvm/rvm/issues/5246](https://github.com/rvm/rvm/issues/5246)
+
+# Troubleshoot RubyGems and Bundler TLS/SSL issues
+
+link: [https://bundler.io/guides/rubygems_tls_ssl_troubleshooting_guide.html#automated-ssl-check](https://bundler.io/guides/rubygems_tls_ssl_troubleshooting_guide.html#automated-ssl-check)
