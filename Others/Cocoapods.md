@@ -14,3 +14,7 @@ gem install activesupport -v 7.0.8
 ```
 
 https://stackoverflow.com/questions/77236339/after-updating-cocoapods-to-1-13-0-it-throws-error
+
+# Cocoapods 细节
+
+https://www.cnblogs.com/Jcloud/p/17719358.html
