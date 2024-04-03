@@ -157,3 +157,33 @@ Solution: [https://github.com/rvm/rvm/issues/5246](https://github.com/rvm/rvm/is
 # Troubleshoot RubyGems and Bundler TLS/SSL issues
 
 link: [https://bundler.io/guides/rubygems_tls_ssl_troubleshooting_guide.html#automated-ssl-check](https://bundler.io/guides/rubygems_tls_ssl_troubleshooting_guide.html#automated-ssl-check)
+
+# 调试 Ruby 脚本
+
+```ruby
+# test.rb
+class Test
+    def test_function()
+        command = %W(clean build)
+        if !ENV['COCOAPODS_DERIVED_DATA_PATH'].nil? && !ENV['COCOAPODS_DERIVED_DATA_PATH'].empty?
+            command += %W(-derivedDataPath #{ENV['COCOAPODS_DERIVED_DATA_PATH']})
+        end
+        puts "command: #{command}"
+    end
+
+    def self.test_class_function(someVar)
+	puts "I got the following variable: " + someVar
+    end
+end
+```
+
+调用
+
+```
+# 实例方法
+$ ruby -r "./test.rb" -e "Test.new.test_function"
+# 类方法
+$ ruby -r "./test.rb" -e "Test.test_class_function 'hi'"
+```
+
+[https://stackoverflow.com/questions/10316495/call-a-ruby-function-from-the-command-line](https://stackoverflow.com/questions/10316495/call-a-ruby-function-from-the-command-line)
