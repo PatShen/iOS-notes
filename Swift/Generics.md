@@ -79,8 +79,39 @@ struct Farm {
   func feed<A: Animal>(_ animal: A) { ... }
   func feed<A>(_ animal: A) where A: Animal { ... }
   func feed(_ animal: some Animal) { ... } // This is more recommended
+
+  // 实现
+  func feed(_ animal: some Animal) {
+    let crop = type(of: animal).Feed.grow()
+    let produce = crop.harvest()
+    animal.eat(produce)
+  }
 }
 ```
+## some Animal
+[some Animal]，如果第一个元素是 `Cow`，这个数组表示其他所有元素都是 `Cow`，不能是其他类型
+
+## any Animal
+* [any Animal]，表示可以是任意 `Animal` 类型，可以不同
+* 静态类型：Animal
+* 动态类型：具体的类型，例如前面的 `Cow`、`Chicken` 等
+* 编译时，编译器会将其类型“擦除”，在运行时才会知道它的具体类型
+
+对于 Farm，我们可以为其新增这样的函数：
+```Swift
+struct Farm {
+  // 可以传递不同类型的 Animal 到数组中
+  func feedAll(_ animals: [any Animal]) {
+    for animal in animals {
+      // 直接调用 `feed` 函数，将 any Animal 作为参数传递给 some Animal
+      feed(animal)
+    }
+  }
+}
+
+```
+
+> `some` 和 `any` 关键字都是在 `Swift5.7` 中新增的
 
 # 参考
 
