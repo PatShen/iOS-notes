@@ -116,3 +116,50 @@ struct Farm {
 # 参考
 
 [Embrace Swift generics](https://developer.apple.com/wwdc22/110352)
+
+```Swift
+protocol AnimalFeed {
+  associatedtype CropType: Crop where CropType.Feed == Self
+  static func grow() -> CropType
+}
+
+protocol Crop {
+  associatedtype Feed: AnimalFeed where Feed.CropType == Self
+  func harvest() -> Feed
+}
+
+protocol Animal {
+  associatedtype Feed: AnimalFeed
+  func eat(_ food: Feed)
+}
+
+struct Farm {
+  func feed(_ animal: some Animal) {
+    let crop = type(of: animal).Feed.grow()
+    let produce = crop.harvest()
+    animal.eat(produce)
+  }
+
+  func feedAll(_ animals: [any Animal]) {
+    for animal in animals {
+      feed(animal)
+    }
+  }
+}
+
+struct Cow: Animal {
+  func eat(_ food: Hay) {}
+}
+
+struct Hay: AnimalFeed {
+  static func grow() -> Alfalfa {
+    Alfalfa()
+  }
+}
+
+struct Alfalfa: Crop {
+  func harvest() -> Hay {
+    Hay()
+  }
+}
+```
