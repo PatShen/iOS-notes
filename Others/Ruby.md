@@ -187,3 +187,14 @@ $ ruby -r "./test.rb" -e "Test.test_class_function 'hi'"
 ```
 
 [https://stackoverflow.com/questions/10316495/call-a-ruby-function-from-the-command-line](https://stackoverflow.com/questions/10316495/call-a-ruby-function-from-the-command-line)
+
+# 卸载 ruby 版本
+
+```Shell
+rvm uninstall 2.7.7
+```
+
+
+```Shell
+rm -rf .rvm/rubies/ruby-{version}
+```
